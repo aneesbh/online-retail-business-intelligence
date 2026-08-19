@@ -148,3 +148,18 @@ online-retail-business-intelligence/
 
 ### Business Insights
 ![Business Insights](screenshots/07-business-insights.png)
+
+## Power BI Dashboard
+
+The dashboard provides interactive analysis of:
+
+- Sales performance
+- Product performance
+- Customer segmentation
+- Monthly trends
+- Country performance
+- Return analysis
+
+Interactive Power BI sharing is not enabled for this workspace, so dashboard screenshots are provided below.
+
+## Dashboard Preview
