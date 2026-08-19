@@ -6,9 +6,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.ensemble import RandomForestRegressor
 
 
-# ============================================================
 # 1. Load raw combined data
-# ============================================================
 
 input_file = "data/online_retail_combined.csv"
 
@@ -17,9 +15,7 @@ df = pd.read_csv(input_file)
 print("Original rows:", len(df))
 
 
-# ============================================================
 # 2. Clean the data
-# ============================================================
 
 # Convert InvoiceDate
 df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"])
@@ -36,16 +32,12 @@ df = df[df["Price"] > 0]
 print("Rows after cleaning:", len(df))
 
 
-# ============================================================
 # 3. Calculate SalesAmount
-# ============================================================
 
 df["SalesAmount"] = df["Quantity"] * df["Price"]
 
 
-# ============================================================
 # 4. Create monthly sales
-# ============================================================
 
 df["YearMonth"] = df["InvoiceDate"].dt.to_period("M")
 
@@ -69,9 +61,7 @@ print("\nFirst 10 months:")
 print(monthly_sales.head(10).to_string(index=False))
 
 
-# ============================================================
 # 5. Save monthly sales dataset
-# ============================================================
 
 monthly_file = "data/monthly_sales.csv"
 
@@ -83,9 +73,7 @@ monthly_sales.to_csv(
 print("\nMonthly sales saved to:", monthly_file)
 
 
-# ============================================================
 # 6. Visualize monthly sales
-# ============================================================
 
 plt.figure(figsize=(12, 6))
 
@@ -106,9 +94,7 @@ plt.tight_layout()
 plt.show()
 
 
-# ============================================================
 # 7. Create time-series features
-# ============================================================
 
 monthly_sales["Year"] = monthly_sales["YearMonth"].dt.year
 
@@ -132,16 +118,12 @@ monthly_sales["Lag3"] = (
 )
 
 
-# ============================================================
 # 8. Remove rows created by lagging
-# ============================================================
 
 model_data = monthly_sales.dropna().copy()
 
 
-# ============================================================
 # 9. Train/Test split
-# ============================================================
 
 # Use the last 6 months as test data
 test_months = 6
@@ -155,9 +137,7 @@ print("\nTraining rows:", len(train))
 print("Testing rows:", len(test))
 
 
-# ============================================================
 # 10. Select features
-# ============================================================
 
 features = [
     "Year",
@@ -177,9 +157,7 @@ X_test = test[features]
 y_test = test["SalesAmount"]
 
 
-# ============================================================
 # 11. Train Random Forest forecasting model
-# ============================================================
 
 model = RandomForestRegressor(
     n_estimators=300,
@@ -195,18 +173,14 @@ model.fit(
 print("\nRandom Forest forecasting model trained!")
 
 
-# ============================================================
 # 12. Predict test period
-# ============================================================
 
 predictions = model.predict(X_test)
 
 test["PredictedSales"] = predictions
 
 
-# ============================================================
 # 13. Evaluate model
-# ============================================================
 
 mae = mean_absolute_error(
     y_test,
@@ -226,9 +200,7 @@ print("MAE :", round(mae, 2))
 print("RMSE:", round(rmse, 2))
 
 
-# ============================================================
 # 14. Display actual vs predicted
-# ============================================================
 
 print("\nActual vs Predicted:")
 
@@ -243,9 +215,7 @@ print(
 )
 
 
-# ============================================================
 # 15. Plot actual vs predicted
-# ============================================================
 
 plt.figure(figsize=(12, 6))
 
@@ -281,9 +251,7 @@ plt.tight_layout()
 plt.show()
 
 
-# ============================================================
 # 16. Save predictions
-# ============================================================
 
 prediction_file = "data/sales_forecast_predictions.csv"
 
@@ -304,9 +272,7 @@ print(
 )
 
 
-# ============================================================
 # 17. Feature importance
-# ============================================================
 
 importance = pd.DataFrame(
     {
