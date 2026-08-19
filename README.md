@@ -125,3 +125,26 @@ online-retail-business-intelligence/
 ├── tests/
 ├── .gitignore
 └── README.md
+
+## Dashboard Preview
+
+### Executive Overview
+![Executive Overview](screenshots/01-executive-overview.png)
+
+### Sales Analysis
+![Sales Analysis](screenshots/02-sales-analysis.png)
+
+### Product Performance
+![Product Performance](screenshots/03-product-performance.png)
+
+### Customer Segmentation
+![Customer Segmentation](screenshots/04-customer-segmentation.png)
+
+### Monthly Trends
+![Monthly Trends](screenshots/05-monthly-trends.png)
+
+### Country & Returns
+![Country & Returns](screenshots/06-country-returns.png)
+
+### Business Insights
+![Business Insights](screenshots/07-business-insights.png)
