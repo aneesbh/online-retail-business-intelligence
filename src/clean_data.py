@@ -1,8 +1,6 @@
 import pandas as pd
 
-# ============================================================
 # 1. Load the combined dataset
-# ============================================================
 
 df = pd.read_csv("data/online_retail_combined.csv")
 
@@ -11,9 +9,7 @@ print("Rows:", len(df))
 print("Columns:", len(df.columns))
 
 
-# ============================================================
 # 2. Convert InvoiceDate to datetime
-# ============================================================
 
 df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"])
 
@@ -21,9 +17,7 @@ print("InvoiceDate converted successfully!")
 print(df["InvoiceDate"].dtype)
 
 
-# ============================================================
 # 3. Remove exact duplicate rows
-# ============================================================
 
 before = len(df)
 
@@ -35,9 +29,7 @@ print("Duplicate rows removed:", before - after)
 print("Rows after removing duplicates:", after)
 
 
-# ============================================================
 # 4. Check unusual prices
-# ============================================================
 
 print("Zero-price rows:", (df["Price"] == 0).sum())
 print("Negative-price rows:", (df["Price"] < 0).sum())
@@ -57,9 +49,7 @@ print(
 )
 
 
-# ============================================================
 # 5. Remove invalid negative-price accounting adjustments
-# ============================================================
 
 before = len(df)
 
@@ -71,9 +61,7 @@ print("Negative-price rows removed:", before - after)
 print("Rows after price validation:", after)
 
 
-# ============================================================
 # 6. Inspect zero-price transactions
-# ============================================================
 
 zero_price = df[df["Price"] == 0]
 
@@ -88,9 +76,7 @@ print(
 )
 
 
-# ============================================================
 # 7. Remove zero-price transactions
-# ============================================================
 
 before = len(df)
 
@@ -105,9 +91,7 @@ print(
 )
 
 
-# ============================================================
 # 8. Check missing Customer IDs
-# ============================================================
 
 missing_customer = df["Customer ID"].isna().sum()
 
@@ -122,9 +106,7 @@ print(
 )
 
 
-# ============================================================
 # 9. Check missing product descriptions
-# ============================================================
 
 missing_description = df["Description"].isna().sum()
 
@@ -139,9 +121,7 @@ print(
 )
 
 
-# ============================================================
 # 10. Calculate SalesAmount
-# ============================================================
 
 df["SalesAmount"] = (
     df["Quantity"] * df["Price"]
@@ -160,9 +140,7 @@ print(
 )
 
 
-# ============================================================
 # 11. Classify transactions
-# ============================================================
 
 df["TransactionType"] = df["Quantity"].apply(
     lambda x: "Return" if x < 0 else "Sale"
@@ -175,9 +153,7 @@ print(
 )
 
 
-# ============================================================
 # 12. Create time-based columns
-# ============================================================
 
 df["Year"] = df["InvoiceDate"].dt.year
 
@@ -213,9 +189,7 @@ print(
 )
 
 
-# ============================================================
 # 13. Create customer dataset
-# ============================================================
 
 customer_df = (
     df.dropna(
@@ -241,9 +215,7 @@ print(
 )
 
 
-# ============================================================
 # 14. Create RFM dataset
-# ============================================================
 
 reference_date = (
     customer_df["InvoiceDate"].max()
@@ -285,9 +257,7 @@ print(
 )
 
 
-# ============================================================
 # 15. RFM quality checks
-# ============================================================
 
 print("\nRFM data types:")
 
@@ -314,9 +284,7 @@ print(
 )
 
 
-# ============================================================
 # 16. Save RFM dataset
-# ============================================================
 
 rfm_file = "data/customer_rfm.csv"
 
@@ -335,9 +303,7 @@ print(
 )
 
 
-# ============================================================
 # 17. Fix Customer ID before saving
-# ============================================================
 
 # Pandas originally reads Customer ID as float
 # because missing values exist.
@@ -349,9 +315,7 @@ df["Customer ID"] = (
 )
 
 
-# ============================================================
 # 18. Save cleaned transaction dataset
-# ============================================================
 
 cleaned_file = (
     "data/online_retail_cleaned.csv"
